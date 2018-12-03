@@ -16,7 +16,7 @@ module.exports = app => {
     const repo_name = await context.payload.repository.name
     const label_name = await context.payload.label.name
     const label_action = await context.payload.action
-    const label_url = await context.payload.label.url
+    const label_url = await context.payload.repository.html_url + '/labels'
     const label_color = await context.payload.label.color
 
     // Generate new Issue object
