@@ -1,13 +1,9 @@
 module.exports = app => {
 
+  // Debug message
   app.log('Yay, the app was loaded!')
 
-  //app.on('issues.opened', async context => {
-  //  app.log('Received issues.opened event')
-  //  const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
-  //  return context.github.issues.createComment(issueComment)
-  //})
-
+  // Listen to Label events
   app.on(['label.created', 'label.edited', 'label.deleted'], async context => {
     app.log('Received a label event')
 
@@ -27,11 +23,11 @@ module.exports = app => {
                                   body: 'A label was ' + label_action + ' by @'+actor+':\n\n<kbd>'+label_name+'</kbd> `#'+label_color+'`\n\nSee the list of labels at ' + label_url
                                 })
     
+    // Let's display the old name if a label was edited
     if (context.payload.action == 'edited') {
       const label_old_name = await context.payload.changes.name.from
       issue.body = issue.body + '\n\nOld name: ' + label_old_name
     }
-
 
     // Create the new Issue
     return context.github.issues.create(issue)
