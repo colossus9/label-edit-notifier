@@ -8,11 +8,12 @@ module.exports = app => {
   //  return context.github.issues.createComment(issueComment)
   //})
 
-  app.on('label.created', async context => {
-    app.log('Received label event')
+  app.on(['label.created', 'label.edited', 'label.deleted'], async context => {
+    app.log('Received a label event')
 
     // Get payload data
-    const owner = await context.payload.repository.owner.login
+    const actor = await context.payload.sender.login
+    const repo_owner = await context.payload.repository.owner.login
     const repo_name = await context.payload.repository.name
     const label_name = await context.payload.label.name
     const label_action = await context.payload.action
@@ -20,12 +21,18 @@ module.exports = app => {
     const label_color = await context.payload.label.color
 
     // Generate new Issue object
-    const issue = context.issue({ owner: owner, 
+    const issue = context.issue({ owner: repo_owner, 
                                   repo: repo_name, 
                                   title: 'Label ' + label_action + ' - ' + label_name, 
-                                  body: 'A label was ' + label_action + ':\n\n<kbd>'+label_name+'</kbd> `#'+label_color+'`\n\nSee the label at ' + label_url
+                                  body: 'A label was ' + label_action + ' by @'+actor+':\n\n<kbd>'+label_name+'</kbd> `#'+label_color+'`\n\nSee the list of labels at ' + label_url
                                 })
     
+    if (context.payload.action == 'edited') {
+      const label_old_name = await context.payload.changes.name.from
+      issue.body = issue.body + '\n\nOld name: ' + label_old_name
+    }
+
+
     // Create the new Issue
     return context.github.issues.create(issue)
   })
