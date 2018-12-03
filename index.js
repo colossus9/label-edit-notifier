@@ -10,8 +10,10 @@ module.exports = app => {
 
   app.on('label.created', async context => {
     app.log('Received label.created event')
-    const repo = await context.payload.repo.get(context.repo())
-    const issue = context.issue({ owner: repo.owner, repo: repo.repo, title: 'Label Created', body: 'A label was created' })
+    const owner = await context.payload.repository.owner.login
+    const repo = await context.payload.repository.name
+    const label = await context.payload.label.name
+    const issue = context.issue({ owner: owner, repo: repo, title: 'Label Created', body: 'A label was created' })
     return context.github.issues.create(issue)
   })
 }
