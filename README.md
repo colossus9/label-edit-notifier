@@ -1,6 +1,6 @@
 # label-edit-notifier
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) to listen for edited labels in a repository and notifies via Issue.
+> A GitHub App built with [Probot](https://github.com/probot/probot) to listen for a [LabelEvent](https://developer.github.com/v3/activity/events/types/#labelevent) in a repository and notifies via Issue.
 
 ## Setup
 
