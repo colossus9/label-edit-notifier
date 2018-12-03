@@ -2,11 +2,11 @@ module.exports = app => {
 
   app.log('Yay, the app was loaded!')
 
-  app.on('issues.opened', async context => {
-    app.log('Received issues.opened event')
-    const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
-    return context.github.issues.createComment(issueComment)
-  })
+  //app.on('issues.opened', async context => {
+  //  app.log('Received issues.opened event')
+  //  const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
+  //  return context.github.issues.createComment(issueComment)
+  //})
 
   app.on('label.created', async context => {
     app.log('Received label.created event')
