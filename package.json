@@ -4,9 +4,9 @@
   "description": "A Probot to listen for edited labels in a repository and notify via Issue.",
   "author": "James Garcia <colossus9@github.com> (https://probot.github.io)",
   "license": "ISC",
-  "repository": "https://github.com//label-edit-notifier.git",
-  "homepage": "https://github.com//label-edit-notifier",
-  "bugs": "https://github.com//label-edit-notifier/issues",
+  "repository": "https://github.com/colossus9/label-edit-notifier.git",
+  "homepage": "https://github.com/colossus9/label-edit-notifier",
+  "bugs": "https://github.com/colossus9/label-edit-notifier/issues",
   "keywords": [
     "probot",
     "github",
